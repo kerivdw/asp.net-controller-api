@@ -16,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<UserDataStore>();
-builder.Services.AddDbContext<UserContext>(dbContextOptions => dbContextOptions.UseSqlite());
+builder.Services.AddDbContext<UserContext>(dbContextOptions => dbContextOptions.UseSqlite("Data Source=User.db"));
 
 builder.Services.AddLogging(provider =>
 {
@@ -35,6 +35,7 @@ builder.Services.AddLogging(provider =>
 });
 
 builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,10 +46,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseKissLogMiddleware(options => {
-    options.Listeners.Add(new RequestLogsApiListener(new Application(
-        builder.Configuration["KissLog.OrganizationId"],
-        builder.Configuration["KissLog.ApplicationId"])
-    )
+    options.Listeners.Add(new RequestLogsApiListener(new Application( builder.Configuration["KissLog.OrganizationId"], builder.Configuration["KissLog.ApplicationId"]))
     {
         ApiUrl = builder.Configuration["KissLog.ApiUrl"]
     });
