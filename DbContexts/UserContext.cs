@@ -8,10 +8,9 @@ namespace asp.net_controller_api.DbContexts
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Address { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public UserContext(DbContextOptions<UserContext> options) : base(options) 
         {
-            optionsBuilder.UseSqlite("connectionstring");
-            base.OnConfiguring(optionsBuilder);
+            
         }
     }
 }
