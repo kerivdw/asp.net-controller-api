@@ -18,28 +18,38 @@ namespace asp.net_controller_api.DbContexts
             modelBuilder.Entity<User>().HasData(new User()
             {
                 Id = 1,
-                FirstName = "Keri",
-                LastName = "van der Westhuizen",
-                DateofBirth = new DateTime(1977, 1, 1),
-                Address_Id = 1,
+                FirstName = "Joe",
+                LastName = "Blogg",
+                DateOfBirth = new DateTime(1954, 1, 1),
             },
             new User()
             {
                 Id = 2,
-                FirstName = "Grant",
-                LastName = "van der Westhuizen",
-                DateofBirth = new DateTime(1977, 1, 1),
-                Address_Id = 1,
-            }) ;
+                FirstName = "Jane",
+                LastName = "Blogg",
+                DateOfBirth = new DateTime(1956, 1, 1),
+            });
             modelBuilder.Entity<Address>().HasData(new Address()
             {
                 Id = 1,
                 Addressline1 = "1 Main Street",
                 Addressline2 = "This building",
-                Suburb = "Avalon",
-                City = "Lower Hutt",
+                Suburb = "Evergreen",
+                City = "Wellington",
                 Country = "New Zealand",
                 PostCode = "5010",
+                userId = 1,
+            },
+            new Address()
+            {
+                Id = 2,
+                Addressline1 = "2 Main Street",
+                Addressline2 = "This building",
+                Suburb = "EverBlue",
+                City = "Napier",
+                Country = "New Zealand",
+                PostCode = "7000",
+                userId = 2,
             });
             base.OnModelCreating(modelBuilder);
         }

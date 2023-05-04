@@ -1,5 +1,4 @@
-﻿using asp.net_controller_api.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace asp.net_controller_api.Entities
@@ -17,9 +16,9 @@ namespace asp.net_controller_api.Entities
         public required string LastName { get; set; }
 
         [Required]
-        public DateTime DateofBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
-        [ForeignKey("Address")]
-        public int Address_Id { get; set; }
+        [Required]
+        public Address Address { get; set; }
     }
 }

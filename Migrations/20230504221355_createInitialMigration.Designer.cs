@@ -11,8 +11,8 @@ using asp.net_controller_api.DbContexts;
 namespace asp.net_controller_api.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20230503141323_addAddressSeedData")]
-    partial class addAddressSeedData
+    [Migration("20230504221355_createInitialMigration")]
+    partial class createInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,13 @@ namespace asp.net_controller_api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("userId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("userId")
+                        .IsUnique();
 
                     b.ToTable("Address");
 
@@ -59,10 +65,22 @@ namespace asp.net_controller_api.Migrations
                             Id = 1,
                             Addressline1 = "1 Main Street",
                             Addressline2 = "This building",
-                            City = "Lower Hutt",
+                            City = "Wellington",
                             Country = "New Zealand",
                             PostCode = "5010",
-                            Suburb = "Avalon"
+                            Suburb = "Evergreen",
+                            userId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Addressline1 = "2 Main Street",
+                            Addressline2 = "This building",
+                            City = "Napier",
+                            Country = "New Zealand",
+                            PostCode = "7000",
+                            Suburb = "EverBlue",
+                            userId = 2
                         });
                 });
 
@@ -72,10 +90,7 @@ namespace asp.net_controller_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Address_Id")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("DateofBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
@@ -94,19 +109,32 @@ namespace asp.net_controller_api.Migrations
                         new
                         {
                             Id = 1,
-                            Address_Id = 1,
-                            DateofBirth = new DateTime(1977, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Keri",
-                            LastName = "van der Westhuizen"
+                            DateOfBirth = new DateTime(1954, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Joe",
+                            LastName = "Blogg"
                         },
                         new
                         {
                             Id = 2,
-                            Address_Id = 1,
-                            DateofBirth = new DateTime(1977, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Grant",
-                            LastName = "van der Westhuizen"
+                            DateOfBirth = new DateTime(1956, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Jane",
+                            LastName = "Blogg"
                         });
+                });
+
+            modelBuilder.Entity("asp.net_controller_api.Entities.Address", b =>
+                {
+                    b.HasOne("asp.net_controller_api.Entities.User", null)
+                        .WithOne("Address")
+                        .HasForeignKey("asp.net_controller_api.Entities.Address", "userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("asp.net_controller_api.Entities.User", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

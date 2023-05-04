@@ -25,5 +25,8 @@ namespace asp.net_controller_api.Entities
 
         [Required]
         public required string PostCode { get; set; }
+
+        [ForeignKey("AddressId")]
+        public int  userId { get; set; }
     }
 }

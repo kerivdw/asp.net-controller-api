@@ -1,5 +1,5 @@
-using asp.net_controller_api;
 using asp.net_controller_api.DbContexts;
+using asp.net_controller_api.Services;
 using KissLog.AspNetCore;
 using KissLog.CloudListeners.Auth;
 using KissLog.CloudListeners.RequestLogsListener;
@@ -15,8 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<UserDataStore>();
 builder.Services.AddDbContext<UserContext>(dbContextOptions => dbContextOptions.UseSqlite("Data Source=User.db"));
+
+builder.Services.AddScoped<UserRepository>();
 
 builder.Services.AddLogging(provider =>
 {
@@ -33,6 +34,8 @@ builder.Services.AddLogging(provider =>
             };
         });
 });
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddHttpContextAccessor();
 
